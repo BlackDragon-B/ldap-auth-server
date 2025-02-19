@@ -20,12 +20,14 @@ ports:
 options:
   ldap_server_url: null
   bind_dn_template: null
+  bind_dn_password: null
   search_base_dn: ""
   search_filter_template: ""
   debug_mode: false
 schema:
   ldap_server_url: str
   bind_dn_template: str
+  bind_dn_password: str
   search_base_dn: str?
   search_filter_template: str?
   debug_mode: bool

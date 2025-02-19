@@ -20,6 +20,7 @@ var configFile = flag.String("config", "/data/options.json", "The path to the se
 type LDAPOptions struct {
 	ServerURL            string
 	BindDNTemplate       string
+	BindDNPassword		 string
 	SearchBaseDN         string
 	SearchFilterTemplate string
 }
@@ -51,7 +52,7 @@ func (a *LDAPAuthenticator) Authenticate(username, password string) (bool, LDAPU
 
 	bindDN := fmt.Sprintf(a.Options.BindDNTemplate, username)
 	log.Debugf("Binding to DN: %q", bindDN)
-	if err := conn.Bind(bindDN, password); err != nil {
+	if err := conn.Bind(a.Options.BindDNTemplate, a.Options.BindDNPassword); err != nil {
 		log.Debugf("Could not bind to user %q: %q", bindDN, err)
 		return false, LDAPUser{}, nil
 	}
@@ -195,6 +196,7 @@ func (s *Server) Serve() error {
 type AddOnConfig struct {
 	LDAPServerURL        string `json:"ldap_server_url"`
 	BindDNTemplate       string `json:"bind_dn_template"`
+	BindDNPassword		 string `json:"bind_dn_password"`
 	SearchBaseDN         string `json:"search_base_dn"`
 	SearchFilterTemplate string `json:"search_filter_template"`
 	DebugMode            bool   `json:"debug_mode"`

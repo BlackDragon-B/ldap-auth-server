@@ -12,6 +12,10 @@ configuration:
       with the username.
 
       Example: cn=%s,ou=people,dc=example,dc=com
+  bind_dn_password:
+    name: Bind DN Password
+    description: |
+      Password to use for Bind DN
   search_base_dn:
     name: Search Base DN
     description: |
