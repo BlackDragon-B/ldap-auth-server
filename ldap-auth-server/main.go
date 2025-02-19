@@ -50,10 +50,10 @@ func (a *LDAPAuthenticator) Authenticate(username, password string) (bool, LDAPU
 	}
 	defer conn.Close()
 
-	bindDN := fmt.Sprintf(a.Options.BindDNTemplate, username)
+	bindDN := a.Options.BindDNTemplate
 	log.Debugf("Binding to DN: %q", bindDN)
 	if err := conn.Bind(a.Options.BindDNTemplate, a.Options.BindDNPassword); err != nil {
-		log.Debugf("Could not bind to user %q: %q", bindDN, err)
+		log.Debugf("Could not bind to user %q: %q with password %q", bindDN, err, a.Options.BindDNPassword)
 		return false, LDAPUser{}, nil
 	}
 
